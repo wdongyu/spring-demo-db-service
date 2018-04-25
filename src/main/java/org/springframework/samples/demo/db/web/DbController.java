@@ -62,16 +62,11 @@ public class DbController {
         String res = "{\"path\" : \"" + path + "\"}";
 
         //execCommand("/usr/bin/open -a /Applications/Utilities/Terminal.app");
-        //execCommand("cd " + path);
-        execCommand("mvn spring-boot:run");
+        execCommand("git pull");
+        execCommand("mvn package");
+        execCommand("nohup java -jar ./target/spring-demo-db-service-1.5.6.jar &");
         //Process pro = null;
         try {
-            //String[] cmdString = new String[]{"cd " + path, "mvn spring-boot:run"};
-            //Runtime rt = Runtime.getRuntime();
-            //pro = rt.exec("open -n /Applications/Utilities/Terminal.app");
-            //String[] s = new String[]{"/bin/bash","-c","cd ~/Document; ls -l"};
-            //pro = rt.exec(s);
-            //pro = rt.exec("pwd");
             //pro = rt.exec("mvn spring-boot:run", null, new File(path));
             //ProcessBuilder pb = new ProcessBuilder(cmdString);
             //pb.start();
@@ -80,26 +75,6 @@ public class DbController {
             //TODO: handle exception
             logger.info(e);
         }
-
-        /*if (pro != null) {
-            BufferedReader in = new BufferedReader(new InputStreamReader(pro.getInputStream()));
-            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(pro.getOutputStream())), true);
-            //out.println("pwd");
-            try {
-               String line;
-               while ((line = in.readLine()) != null) {
-                  logger.info(line);
-               }
-               pro.waitFor();
-               in.close();
-               out.close();
-               pro.destroy();
-               return (JSONObject)(new JSONParser().parse(res));
-            }
-            catch (Exception e) {
-               logger.info("aaa");
-            }
-         }*/
         
         return null;
     }
@@ -108,6 +83,23 @@ public class DbController {
     private void execCommand(String command) {
         try {
             Process pro = Runtime.getRuntime().exec(command);
+            if (pro != null) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(pro.getInputStream()));
+                PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(pro.getOutputStream())), true);
+                try {
+                   String line;
+                   while ((line = in.readLine()) != null) {
+                      logger.info(line);
+                   }
+                   pro.waitFor();
+                   in.close();
+                   out.close();
+                   pro.destroy();
+                }
+                catch (Exception e) {
+                   logger.info("aaa");
+                }
+             }
         } catch (Exception e) {
             logger.info("fail to exec " + command);
         }
