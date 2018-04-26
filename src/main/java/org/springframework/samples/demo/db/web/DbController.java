@@ -51,7 +51,7 @@ public class DbController {
         //DiscoveryManager.getInstance().shutdownComponent();
         logger.info("/db, host:" + instance.getHost() + ", service_id:" + instance.getServiceId());
         //Properties properties = System.getProperties();
-        return "Info from Database";
+        return "Info from Database2";
     }
 
     @RequestMapping(value = "/servicePath" ,method = RequestMethod.GET)
