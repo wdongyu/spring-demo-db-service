@@ -13,31 +13,29 @@ import com.netflix.discovery.DiscoveryManager;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.omg.CORBA.Context;
-import org.omg.CORBA.ContextList;
-import org.omg.CORBA.DomainManager;
-import org.omg.CORBA.ExceptionList;
-import org.omg.CORBA.NVList;
-import org.omg.CORBA.NamedValue;
-import org.omg.CORBA.Object;
-import org.omg.CORBA.Policy;
-import org.omg.CORBA.Request;
-import org.omg.CORBA.SetOverrideType;
-import org.omg.SendingContext.RunTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.sleuth.SpanAdjuster;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+//import zipkin2.Span;
+//import zipkin2.reporter.AsyncReporter;
+//import zipkin2.reporter.Reporter;
 
 /**
  * @author wdongyu
  */
 
 @RestController
+@EnableWebMvc
+@Configuration
 public class DbController {
 
     private final Logger logger = Logger.getLogger(getClass());
@@ -45,13 +43,16 @@ public class DbController {
     @Autowired
     private DiscoveryClient client;
 
+    //@Autowired
+    //private Reporter<Span> reporter;
+
     @RequestMapping(value = "/db" ,method = RequestMethod.GET)
     public String db() {
         ServiceInstance instance = client.getLocalServiceInstance();
         //DiscoveryManager.getInstance().shutdownComponent();
         logger.info("/db, host:" + instance.getHost() + ", service_id:" + instance.getServiceId());
         //Properties properties = System.getProperties();
-        return "Info from Database2";
+        return "Info from Database";
     }
 
     @RequestMapping(value = "/servicePath" ,method = RequestMethod.GET)
