@@ -135,15 +135,15 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>wdongyu.org.springframework.cloud</groupId>
             <artifactId>wdongyu-spring-cloud-sleuth-zipkin</artifactId>
             <version>1.2.1.RELEASE</version>
-        </dependency>
-        <!--dependency>
+        </dependency-->
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-sleuth-zipkin</artifactId>
-        </dependency-->
+        </dependency>
 
         <!-- Third parties -->
         <dependency>
